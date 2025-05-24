@@ -1,0 +1,146 @@
+body {
+  background: #f8fafc;
+  font-family: "Inter", Arial, sans-serif;
+  color: #222;
+}
+
+.navbar-info {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  background: linear-gradient(90deg, #13b0c9 0%, #1de9b6 100%);
+}
+
+.navbar .navbar-brand img {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.navbar .btn,
+.navbar .nav-link {
+  transition: all 0.2s;
+}
+
+.navbar .btn:hover,
+.navbar .nav-link:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #fff !important;
+}
+
+.card {
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  border: none;
+  transition: box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+}
+
+.card-header {
+  border-radius: 18px 18px 0 0 !important;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+
+.table {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.table thead {
+  background: #e0f7fa;
+}
+
+.table th,
+.table td {
+  vertical-align: middle !important;
+  border: none;
+  padding: 0.75rem 0.5rem;
+}
+
+.table th {
+  color: #00838f;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: #f1f8e9;
+}
+
+.btn-info,
+.btn-danger,
+.btn-primary {
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  transition: all 0.18s;
+}
+
+.btn-info:hover,
+.btn-danger:hover,
+.btn-primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px) scale(1.04);
+}
+
+input.form-control,
+select.form-control {
+  border-radius: 8px;
+  border: 1px solid #b2ebf2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input.form-control:focus,
+select.form-control:focus {
+  border-color: #00bcd4;
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.1);
+}
+
+select.form-control {
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+select.form-control option {
+  font-size: 1rem;
+  padding: 0.375rem 0.75rem;
+}
+
+.alert {
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+footer.bg-info {
+  background: linear-gradient(90deg, #13b0c9 0%, #1de9b6 100%);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 768px) {
+  .card,
+  .card-header,
+  .table {
+    border-radius: 12px !important;
+  }
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .navbar .navbar-brand span {
+    font-size: 1rem;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e0f7fa;
+}
+::-webkit-scrollbar-thumb {
+  background: #b2ebf2;
+  border-radius: 8px;
+}

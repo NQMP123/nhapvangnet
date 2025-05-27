@@ -10,6 +10,8 @@ include 'includes/header.php';
                 <div class="alert alert-danger"><?php echo implode('<br>', $errors); ?></div>
             <?php endif; ?>
             <form method="post" action="">
+                <input type="hidden" name="csrf_token"
+                    value="<?php echo $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); ?>">
                 <div class="form-group">
                     <label for="username">Tên đăng nhập</label>
                     <input type="text" class="form-control" id="username" name="username" required>

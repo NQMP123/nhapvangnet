@@ -11,6 +11,12 @@
                 <button type="submit" class="btn btn-success btn-admin mb-2">Thêm server</button>
             </form>
             <?php
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                    echo '<div class="alert alert-danger">CSRF token không hợp lệ!</div>';
+                    exit;
+                }
+            }
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['gold_price'])) {
                 $stmt = $pdo->prepare("INSERT INTO server (name, gold_price) VALUES (?, ?)");
                 $stmt->execute([$_POST['name'], $_POST['gold_price']]);

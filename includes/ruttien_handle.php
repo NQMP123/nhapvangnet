@@ -3,7 +3,12 @@ $successMsg = $errorMsg = '';
 if (!isset($user_id)) {
     $user_id = $_SESSION['user_id'] ?? null;
 }
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'ruttien') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['errorMsg'] = 'CSRF token không hợp lệ!';
+        header('Location: ruttien.php');
+        exit;
+    }
     if (!$user_id) {
         $errorMsg = 'Bạn cần đăng nhập để rút tiền!';
     } else {

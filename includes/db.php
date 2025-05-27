@@ -14,5 +14,5 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die('Kết nối database thất bại: ' . $e->getMessage());
+    die('Kết nối database thất bại');
 }

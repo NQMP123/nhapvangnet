@@ -7,7 +7,9 @@ include 'includes/ruttien_handle.php';
 $user_id = $_SESSION['user_id'] ?? null;
 $gold_balance = 0;
 if ($user_id) {
-    $gold_balance = $pdo->query("SELECT balance FROM user WHERE id = " . intval($user_id))->fetchColumn();
+    $stmt = $pdo->prepare("SELECT balance FROM user WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $gold_balance = $stmt->fetchColumn();
 }
 // Danh sách ngân hàng
 $banks = [
@@ -73,6 +75,8 @@ if ($user_id) {
             <?php endif; ?>
             <form id="withdrawForm" method="post">
                 <input type="hidden" name="action" value="ruttien">
+                <input type="hidden" name="csrf_token"
+                    value="<?php echo $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); ?>">
                 <div class="form-group row align-items-center">
                     <label class="col-md-2 col-form-label font-weight-bold">Hình thức</label>
                     <div class="col-md-10">

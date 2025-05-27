@@ -11,7 +11,9 @@ $user_id = $_SESSION['user_id'] ?? null;
 $gold_balance = 0;
 $transactions = [];
 if ($user_id) {
-    $gold_balance = $pdo->query("SELECT balance FROM user WHERE id = " . intval($user_id))->fetchColumn();
+    $stmt = $pdo->prepare("SELECT balance FROM user WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $gold_balance = $stmt->fetchColumn();
     // Danh sách nhân vật
     // Lịch sử giao dịch nạp vàng
     $transactions = $pdo->prepare("SELECT n.*, c.name as char_name, s.name as server_name FROM napvang n JOIN `player` c ON n.character_id = c.id JOIN server s ON c.server_id = s.id WHERE n.user_id = ? ORDER BY n.created_at DESC LIMIT 10");
@@ -62,6 +64,8 @@ unset($_SESSION['successMsg'], $_SESSION['errorMsg']);
                     <?php endif; ?>
                     <form id="goldForm" method="post">
                         <input type="hidden" name="action" value="napvang">
+                        <input type="hidden" name="csrf_token"
+                            value="<?php echo $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); ?>">
                         <div class="form-group">
                             <label for="server">Chọn máy chủ</label>
                             <select class="form-control" id="server" name="server" required>

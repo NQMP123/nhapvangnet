@@ -1,0 +1,35 @@
+/* Admin panel custom styles */
+.admin-card {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  border: none;
+}
+.admin-table th,
+.admin-table td {
+  vertical-align: middle !important;
+  font-size: 1.08em;
+}
+.admin-table thead th {
+  background: #eaf6fa;
+  color: #16a9c7;
+  font-weight: bold;
+}
+.admin-table tbody tr:hover {
+  background: #f3fbfd;
+}
+.btn-admin {
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 6px 18px;
+  font-size: 1.08em;
+}
+@media (max-width: 768px) {
+  .admin-card,
+  .card {
+    margin-bottom: 1.5rem;
+  }
+  .admin-table th,
+  .admin-table td {
+    font-size: 0.98em;
+  }
+}

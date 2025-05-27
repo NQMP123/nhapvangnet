@@ -144,3 +144,35 @@ footer.bg-info {
   background: #b2ebf2;
   border-radius: 8px;
 }
+
+.d-none {
+  display: none !important;
+}
+#goldForm label {
+  font-weight: 600;
+}
+#goldForm .form-control:disabled,
+#goldForm .form-control[readonly] {
+  background: #f3f6fa;
+  color: #222;
+  font-weight: bold;
+}
+#goldForm .form-group {
+  margin-bottom: 1.1rem;
+}
+#goldForm .btn-danger {
+  font-size: 1.1rem;
+  padding: 0.7rem 0;
+  border-radius: 8px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+#goldForm .text-danger {
+  font-size: 0.98rem;
+}
+#goldForm .font-weight-bold {
+  font-weight: bold !important;
+}
+#goldForm .text-center {
+  text-align: center !important;
+}

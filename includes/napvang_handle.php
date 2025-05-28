@@ -55,13 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $errorMsg = 'Vui lòng nhập đầy đủ thông tin!';
         } else {
             // Kiểm tra đã có đơn pending tại server này chưa
-            $stmt = $pdo->prepare("SELECT id FROM napvang WHERE user_id=? AND status='pending' AND character_id IN (SELECT id FROM player WHERE user_id=? AND server_id=?)");
-            $stmt->execute([$user_id, $user_id, $server_id]);
+            $stmt = $pdo->prepare("SELECT id FROM napvang WHERE user_id=? AND status='pending' and server_id=?");
+            $stmt->execute([$user_id, $server_id]);
             if ($stmt->fetch()) {
                 $errorMsg = 'Bạn chỉ được tạo 1 đơn nạp vàng đang chờ tại mỗi server!';
             } else {
-                $stmt = $pdo->prepare("INSERT INTO napvang (user_id, character_id, amount, status, type) VALUES (?, ?, ?, 'pending', ?)");
-                $stmt->execute([$user_id, $character_id, $amount, $typeInt]);
+                $stmt = $pdo->prepare("INSERT INTO napvang (user_id,server_id,character_name, amount, status, type) VALUES (?,?,  ?, ?, 'pending', ?)");
+                $stmt->execute([$user_id, $server_id, $character_name, $amount, $typeInt]);
                 $successMsg = 'Tạo đơn nạp vàng thành công!';
             }
         }

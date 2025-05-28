@@ -17,7 +17,8 @@ foreach ($list as $row) {
     echo '<td>' . htmlspecialchars($row['server_name']) . '</td>';
     echo '<td>' . htmlspecialchars($row['name']) . '</td>';
     echo '<td>' . (isset($row['location']) ? htmlspecialchars($row['location']) : '---') . '</td>';
-    echo '<td>' . (isset($row['zone']) ? htmlspecialchars($row['zone']) : '---') . '</td>';
+    echo '<td>' . (isset($row['region']) ? htmlspecialchars($row['region']) : '---') . '</td>';
     echo '<td>' . (isset($row['gold_balance']) ? number_format($row['gold_balance']) : '---') . '</td>';
+    echo '<td>' . (isset($row['gold_bar']) ? number_format($row['gold_bar']) : '---') . '</td>';
     echo '</tr>';
 }

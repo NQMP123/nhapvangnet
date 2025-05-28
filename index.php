@@ -16,7 +16,7 @@ if ($user_id) {
     $gold_balance = $stmt->fetchColumn();
     // Danh sách nhân vật
     // Lịch sử giao dịch nạp vàng
-    $transactions = $pdo->prepare("SELECT n.*, c.name as char_name, s.name as server_name FROM napvang n JOIN `player` c ON n.character_id = c.id JOIN server s ON c.server_id = s.id WHERE n.user_id = ? ORDER BY n.created_at DESC LIMIT 10");
+    $transactions = $pdo->prepare("SELECT * FROM napvang WHERE user_id = ? ORDER BY created_at DESC LIMIT 10");
     $transactions->execute([$user_id]);
     $transactions = $transactions->fetchAll();
 }
@@ -37,7 +37,7 @@ unset($_SESSION['successMsg'], $_SESSION['errorMsg']);
                 <p><b>Hệ thống nhập vàng tự động</b></p>
                 <p><b>Bước 1: Đặt đơn nạp vàng</b> trên website</p>
                 <p><b>Bước 2:</b> Vào <b>đúng địa điểm</b> gặp nhân vật nhập vàng để giao dịch<br>
-                    (Chú ý kiểm tra kỹ tên nhân vật ví có fake)</p>
+                    (Chú ý kiểm tra kỹ tên nhân vật vì có fake)</p>
                 <p>Sau khi <b>giao dịch thành công</b> bạn sẽ được <b>cộng tiền</b> trên website sau <b>3 giây</b><br>
                     Bạn có thể rút ra ATM, Ví MoMo và các loại ví điện tử khác ở mục <a href="/ruttien.php"
                         class="font-weight-bold text-primary">RÚT TIỀN</a></p>
@@ -53,14 +53,19 @@ unset($_SESSION['successMsg'], $_SESSION['errorMsg']);
         <div class="col-md-5 mb-4">
             <div class="card border-info">
                 <div class="card-header bg-info text-white">
-                    <i class="fa fa-coins"></i> Số dư: <?php echo number_format($gold_balance); ?>
+                    <i class="fa fa-coins"></i> Số dư:
+                    <?php echo number_format($gold_balance); ?>
                 </div>
                 <div class="card-body">
                     <?php if (!empty($successMsg)): ?>
-                        <div class="alert alert-success text-center"><?php echo $successMsg; ?></div>
+                        <div class="alert alert-success text-center">
+                            <?php echo $successMsg; ?>
+                        </div>
                     <?php endif; ?>
                     <?php if (!empty($errorMsg)): ?>
-                        <div class="alert alert-danger text-center"><?php echo $errorMsg; ?></div>
+                        <div class="alert alert-danger text-center">
+                            <?php echo $errorMsg; ?>
+                        </div>
                     <?php endif; ?>
                     <form id="goldForm" method="post">
                         <input type="hidden" name="action" value="napvang">
@@ -144,11 +149,12 @@ unset($_SESSION['successMsg'], $_SESSION['errorMsg']);
                                     <th>Địa điểm</th>
                                     <th>KV</th>
                                     <th>Số vàng</th>
+                                    <th>Số thỏi vàng</th>
                                 </tr>
                             </thead>
                             <tbody id="receiver-tbody">
                                 <tr>
-                                    <td colspan="5" class="text-info text-center p-3">Vui lòng chọn máy chủ để xem danh
+                                    <td colspan="6" class="text-info text-center p-3">Vui lòng chọn máy chủ để xem danh
                                         sách nhân vật nhận vàng.</td>
                                 </tr>
                             </tbody>
@@ -182,19 +188,23 @@ unset($_SESSION['successMsg'], $_SESSION['errorMsg']);
                                                 <span class="badge badge-danger mr-2" style="font-size:1.1em;"><i
                                                         class="fa fa-times-circle"></i></span>
                                             <?php endif; ?>
-                                            <span
-                                                class="font-weight-bold text-info"><?php echo htmlspecialchars($tr['server_name']); ?></span>
+                                            <span class="font-weight-bold text-info">
+                                                <?php echo htmlspecialchars("Server " . $tr['server_id'] . " sao"); ?>
+                                            </span>
                                         </div>
-                                        <div class="mb-1"><b>Nhân vật:</b> <?php echo htmlspecialchars($tr['char_name']); ?>
+                                        <div class="mb-1"><b>Nhân vật:</b>
+                                            <?php echo htmlspecialchars($tr['character_name']); ?>
                                         </div>
                                         <div class="mb-1">
                                             <?php if (isset($tr['type']) && $tr['type'] == 1): ?>
-                                                <b>Số thỏi vàng:</b> <span
-                                                    class="text-warning font-weight-bold"><?php echo number_format($tr['amount']); ?></span>
+                                                <b>Số thỏi vàng:</b> <span class="text-warning font-weight-bold">
+                                                    <?php echo number_format($tr['amount']); ?>
+                                                </span>
                                                 <small class="text-muted">(1 thỏi = 37 triệu vàng)</small>
                                             <?php else: ?>
-                                                <b>Số vàng:</b> <span
-                                                    class="text-warning font-weight-bold"><?php echo number_format($tr['amount']); ?></span>
+                                                <b>Số vàng:</b> <span class="text-warning font-weight-bold">
+                                                    <?php echo number_format($tr['amount']); ?>
+                                                </span>
                                             <?php endif; ?>
                                         </div>
                                         <div class="mb-1"><b>Thời gian:</b>

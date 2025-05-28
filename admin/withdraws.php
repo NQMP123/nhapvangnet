@@ -1,22 +1,14 @@
 <?php include '_auth.php'; ?>
+<?php
+// Xử lý POST duyệt/hủy đơn rút tiền
+include 'handle_withdraws.php';
+?>
 <?php include '_admin_header.php'; ?>
 <div class="container my-5">
     <div class="card admin-card shadow mb-4">
         <div class="card-header bg-success text-white font-weight-bold">Duyệt/Hủy đơn rút tiền</div>
         <div class="card-body">
             <?php
-            if (isset($_POST['approve_id'])) {
-                $id = intval($_POST['approve_id']);
-                $stmt = $pdo->prepare("UPDATE ruttien SET status='success' WHERE id=? AND status='pending'");
-                $stmt->execute([$id]);
-                echo '<div class="alert alert-success">Đã duyệt đơn!</div>';
-            }
-            if (isset($_POST['cancel_id'])) {
-                $id = intval($_POST['cancel_id']);
-                $stmt = $pdo->prepare("UPDATE ruttien SET status='failed' WHERE id=? AND status='pending'");
-                $stmt->execute([$id]);
-                echo '<div class="alert alert-warning">Đã hủy đơn!</div>';
-            }
             $withdraws = $pdo->query("SELECT r.*, u.username FROM ruttien r JOIN user u ON r.user_id = u.id WHERE r.status='pending' ORDER BY r.created_at ASC")->fetchAll();
             ?>
             <div class="table-responsive">
@@ -55,4 +47,8 @@
         </div>
     </div>
 </div>
+<?php if (!empty($_SESSION['adminMsg'])) {
+    echo $_SESSION['adminMsg'];
+    unset($_SESSION['adminMsg']);
+} ?>
 <?php include '_admin_footer.php'; ?>
